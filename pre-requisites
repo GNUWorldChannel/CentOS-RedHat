@@ -8,3 +8,31 @@
 		OS SUPPORT: CentOS 8.1-131911.0.8.el8.x86_64
 			     [ by: ARI3L | rVn | y2k ] #arlington STAFF
 ----------------------------------------------------------------------------
+
+#1 - Update OS and change Host.  (root) 
+
+	 NOTE: After change Hostname need to reboot the machine.
+	 NOTE: Need to set a subdomain on the server for make it work well.
+	 NOTE: Need a Static local IPV4 Need to check: /etc/sysconfig/network-scripts/INTERFACE*
+	 NOTE: our interface looks like: ifcfg-enp0s3
+	 NOTE: (Linux MINT incompatible)
+	 NOTE: This Config is only on IPv4 if you dont have a IPV6 Tunnel config.
+------------------------------------------------------------------------------
+	 
+	[root@irc ~]# yum clean all 
+	[root@irc ~]# yum clean metadata 
+	[root@irc ~]# yum update 
+	[root@irc ~]# yum install -y systemd nano
+	[root@irc ~]# hostnamectl set-hostname irc.undernet.org
+	
+	PLEASE NOTE: when we say "irc.undernet.org" means your host name.	
+	NOTE: You can use hostnamectl. if you change with. /etc/hostname need to change /etc/hosts too.
+	NOTE: You need to set your hostname and save file. Crt + X + Y + Intro
+	
+	[root@irc ~]# nano /etc/hostname
+	irc.undernet.org
+	
+	[root@irc ~]# nano /etc/hosts
+	127.0.0.1 irc.undernet.org
+	
+	[root@irc ~]# reboot
