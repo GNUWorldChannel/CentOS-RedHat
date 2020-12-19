@@ -107,7 +107,7 @@
 
 	NOTE: How to Open Ports with FirewallD 80, 443, 53, 113, 110, 6667, 4400, 25, 110, 22
 	NOTE: firewall-cmd --add-port=6667/tcp can be TCP or UDP firewall-cmd --add-port=6667/udp
-	NOTE: Port 113 need to be open TCP/UDP for xinetd work correctly.
+	NOTE: Port 113 / 25 / 6667 / need to be open TCP/UDP for work correctly.
 	
 	[root@localhost ~]# firewall-cmd --add-port=6667/tcp
 	success
