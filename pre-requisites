@@ -15,7 +15,6 @@
 	 NOTE: Need to set a subdomain on the server for make it work well.
 	 NOTE: Need a Static local IPV4 Need to check: /etc/sysconfig/network-scripts/INTERFACE*
 	 NOTE: our interface looks like: ifcfg-enp0s3
-	 NOTE: (Linux MINT incompatible)
 	 NOTE: This Config is only on IPv4 if you dont have a IPV6 Tunnel config.
 ------------------------------------------------------------------------------
 	 
