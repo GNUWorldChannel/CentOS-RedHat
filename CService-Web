@@ -93,7 +93,7 @@ because we can only help you install the site, but never modify the code that th
 	----------------------------
 	 NOTE: Edit the file and save change. CTRL+X+Y
 	 
-	 NOTE: Now we edit the vhost create in the sites-available.
+	 NOTE: Now we edit the vhost created in the sites-available.
 	 
 	 [root@irc ~]# nano /etc/httpd/sites-available/example.org.conf
        
