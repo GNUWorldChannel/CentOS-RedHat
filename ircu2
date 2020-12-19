@@ -1,9 +1,74 @@
-				     _                ____
-				    (_)_ __ ___ _   _|___ \
-				    | | '__/ __| | | | __) |
-				    | | | | (__| |_| |/ __/
+			       _                ____
+			      (_)_ __ ___ _   _|___ \
+			      | | '__/ __| | | | __) |
+			      | | | | (__| |_| |/ __/
 			  The |_|_|  \___|\__,_|_____| Guide #2
------------------------------------------------------------
+----------------------------------------------------------------------------
 		OS SUPPORT: CentOS 8.1-131911.0.8.el8.x86_64
          [ by: ARI3L | rVn | y2k ] #arlington STAFF
------------------------------------------------------------
+----------------------------------------------------------------------------
+#1 - Add user GNUWORLD. + Password ask.
+
+	[root@irc ~]# adduser gnuworld
+	[root@irc ~]# passwd gnuworld
+	
+#2 - Enter in GNUWORLD USER
+	
+	[root@irc ~]# su - gnuworld
+	[gnuworld@irc ~]# pwd
+	/home/gnuworld <-- We are in gnuworld user home folder.
+	[gnuworld@irc ~]#
+	
+#3 - Clone ircu2 from Github.
+
+	[gnuworld@irc ~]# git clone https://github.com/UndernetIRC/ircu2.git
+	[gnuworld@irc ~]# cd ircu2/
+	gnuworld@ircd:~/ircu2 chmod +x configure
+	gnuworld@ircd:~/ircu2 ./configure --help (SEE the help for all config. This is a basic setup.)
+	gnuworld@ircd:~/ircu2 ./configure --prefix=$HOME --with-maxcon=1024  NOTE:( Maximum number of connections server will accept. --with-maxcon=1024 )	
+	
+	Note if you have Raspberry pi 4 use this flag ./configure --build=unknown-unknown-linux --prefix=$HOME --with-maxcon=1024
+	
+	gnuworld@ircd:~/ircu2 make
+	gnuworld@ircd:~/ircu2 make install
+
+#4 - Config Files for IRCD.
+	 NOTE: Need to edit ircd.conf so you can run ircd.
+
+	[gnuworld@irc ircu2]$ cd ..
+	[gnuworld@irc ~]# ls
+	bin  ircu2  lib
+	----------------------
+	[gnuworld@irc ~]# cd lib
+	[gnuworld@irc lib]$ ls 
+	example.conf
+	----------------------
+	[gnuworld@irc lib]$ cp example.conf ircd.conf
+	[gnuworld@irc lib]$ echo "Hello World" > ircd.motd
+	----------------------
+	[gnuworld@irc lib]$ ls
+	example.conf  ircd.conf  ircd.motd
+	----------------------
+	[gnuworld@irc lib]$ cd ..
+	----------------------
+	[gnuworld@irc ~]# ls
+	bin  ircu2  lib
+	----------------------
+	[gnuworld@irc ~]# cd bin
+	----------------------
+	[gnuworld@irc bin]$ ls	
+	convert-conf  ircd  ircd.202005201207  umkpasswd
+	----------------------
+	[gnuworld@irc bin]$ ./ircd
+	[gnuworld@irc bin]$
+	----------------------
+	[gnuworld@irc bin]$ ps x
+	PID TTY      STAT   TIME COMMAND
+	10459 ?        Ss     0:00 ./ircd   <-- Is running!! :)
+	10482 pts/0    R+     0:00 ps x
+	[gnuworld@irc bin]$
+	---------------------
+#5 - Now we can go to mIRC. 
+	
+	/server ServerName:Port
+	/server IP:Port
