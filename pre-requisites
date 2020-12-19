@@ -36,3 +36,101 @@
 	127.0.0.1 irc.undernet.org
 	
 	[root@irc ~]# reboot
+	
+#2 - Install / Development Tools / tcl-devel / perl / screen / xinetd / authd
+	
+	[root@irc ~]# yum groupinstall -y 'Development Tools'
+	[root@irc ~]# yum install -y tcl-devel perl screen xinetd authd
+
+
+#3 - Firewall Start / enable / status your firewall.
+
+	[root@irc ~]# systemctl start firewalld
+	[root@irc ~]# systemctl enable firewalld
+	[root@irc ~]# systemctl status firewalld
+	 firewalld.service - firewalld - dynamic firewall daemon
+	   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+	   Active: active (running) since Sat 2020-12-19 13:58:26 CET; 1h 7min ago
+
+
+	[root@irc ~]# firewall-cmd --list-all
+	public (active)
+	  target: default
+	  icmp-block-inversion: no
+	  interfaces: enp0s3
+	  sources:
+	  services: cockpit dhcpv6-client ssh
+	  ports:
+	  protocols:
+	  masquerade: no
+	  forward-ports:
+	  source-ports:
+	  icmp-blocks:
+	  rich rules:
+	[root@irc ~]#
+	
+	NOTE: This is how you check ZONES.
+	
+	[root@irc ~]# firewall-cmd --get-default-zone
+	public
+	[root@irc ~]# 
+	
+	NOTE: This is how you check ACTIVE ZONES.
+	
+	[root@irc ~]# firewall-cmd --get-active-zones
+	libvirt
+	  interfaces: virbr0
+	public
+	  interfaces: enp0s3
+	[root@irc ~]#
+	
+	NOTE: This is how you LIST ALL ZONES.
+	
+	[root@irc ~]# firewall-cmd --list-all-zones
+	[root@irc ~]# 
+
+	NOTE: Check Directory for zones. 
+	
+	[root@irc ~]# ls -l /usr/lib/firewalld/zones/
+	total 44
+	-rw-r--r--. 1 root root 299 Aug 11 22:53 block.xml
+	-rw-r--r--. 1 root root 293 Aug 11 22:53 dmz.xml
+	-rw-r--r--. 1 root root 291 Aug 11 22:53 drop.xml
+	-rw-r--r--. 1 root root 304 Aug 11 22:53 external.xml
+	-rw-r--r--. 1 root root 397 Aug 11 22:53 home.xml
+	-rw-r--r--. 1 root root 412 Aug 11 22:53 internal.xml
+	-rw-r--r--. 1 root root 809 Nov 26  2019 libvirt.xml
+	-rw-r--r--. 1 root root 729 Nov 13 23:19 nm-shared.xml
+	-rw-r--r--. 1 root root 343 Aug 11 22:53 public.xml
+	-rw-r--r--. 1 root root 162 Aug 11 22:53 trusted.xml
+	-rw-r--r--. 1 root root 339 Aug 11 22:53 work.xml
+	[root@irc ~]#
+
+	NOTE: How to Open Ports with FirewallD 80, 443, 53, 113, 6667, 4400, 25, 110, 22
+	
+	[root@localhost ~]# firewall-cmd --add-port=6667/tcp
+	success
+	[root@irc ~]# 
+	
+	[root@irc ~]# firewall-cmd --list-port
+	6667/tcp 80/tcp 443/tcp 53/tcp 113/tcp 4400/tcp 25/tcp 110/tcp 22/tcp
+
+	[root@irc ~]# 
+	
+	NOTE: How to REMOVE a OPEN port! 
+	[root@irc ~]# firewall-cmd --remove-port=6667/tcp
+	success
+	[root@irc ~]# 
+	
+# 4 - Running xinetd / authd
+
+	[root@irc ~]# service xinetd start
+	Redirecting to /bin/systemctl start xinetd.service
+	[root@irc ~]#
+	
+	NOTE: Check if the xinetd is working well!
+	
+	[root@irc ~]# ps aux | grep xinetd
+	root       36644  0.0  0.0  46724   508 ?        Ss   15:29   0:00 /usr/sbin/xinetd -stayalive -pidfile /var/run/xinetd.pid
+	root       36686  0.0  0.0  12112   996 pts/2    S+   15:30   0:00 grep --color=auto xinetd
+	[root@irc ~]#
