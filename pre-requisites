@@ -106,6 +106,8 @@
 	[root@irc ~]#
 
 	NOTE: How to Open Ports with FirewallD 80, 443, 53, 113, 110, 6667, 4400, 25, 110, 22
+	NOTE: firewall-cmd --add-port=6667/tcp can be TCP or UDP firewall-cmd --add-port=6667/udp
+	NOTE: Port 113 need to be open TCP/UDP for xinetd work correctly.
 	
 	[root@localhost ~]# firewall-cmd --add-port=6667/tcp
 	success
@@ -128,8 +130,71 @@
 	[root@irc ~]#
 	
 	NOTE: Check if the xinetd is working well!
+	NOTE: 
 	
 	[root@irc ~]# ps aux | grep xinetd
 	root       36644  0.0  0.0  46724   508 ?        Ss   15:29   0:00 /usr/sbin/xinetd -stayalive -pidfile /var/run/xinetd.pid
 	root       36686  0.0  0.0  12112   996 pts/2    S+   15:30   0:00 grep --color=auto xinetd
+	[root@irc ~]#
+
+
+#5 - Make sure you know all info about your IP / Netmask.
+
+	NOTE: All ifconfig can change. Not going to show the same result!
+	NOTE: inet 192.168.1.133 <-- Is your IP.
+	 
+	[root@irc ~]# ifconfig
+	enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+			inet 192.168.1.133  netmask 255.255.255.0  broadcast 192.168.1.255
+			inet6 fe80::19bc:3208:16a3:69b0  prefixlen 64  scopeid 0x20<link>
+			ether 08:00:27:48:44:98  txqueuelen 1000  (Ethernet)
+			RX packets 801585  bytes 1167419875 (1.0 GiB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 92290  bytes 12250401 (11.6 MiB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+			inet 127.0.0.1  netmask 255.0.0.0
+			inet6 ::1  prefixlen 128  scopeid 0x10<host>
+			loop  txqueuelen 1000  (Local Loopback)
+			RX packets 24  bytes 2040 (1.9 KiB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 24  bytes 2040 (1.9 KiB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	virbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+			inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255
+			ether 52:54:00:9c:12:f5  txqueuelen 1000  (Ethernet)
+			RX packets 0  bytes 0 (0.0 B)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 0  bytes 0 (0.0 B)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	[root@irc ~]#
+	--------------------------------
+	[root@irc ~]# ifconfig | grep inet
+        inet 192.168.1.133  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::19bc:3208:16a3:69b0  prefixlen 64  scopeid 0x20<link>
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255
+	[root@irc ~]#
+	--------------------------------
+	[root@irc ~]# ifconfig | grep ether
+        ether 08:00:27:48:44:98  txqueuelen 1000  (Ethernet)
+        ether 52:54:00:9c:12:f5  txqueuelen 1000  (Ethernet)
+	[root@irc ~]#
+	--------------------------------
+	[root@irc ~]# ip route show
+	default via 192.168.1.1 dev enp0s3 proto dhcp metric 100
+	192.168.1.0/24 dev enp0s3 proto kernel scope link src 192.168.1.133 metric 100
+	192.168.122.0/24 dev virbr0 proto kernel scope link src 192.168.122.1 linkdown
+	[root@irc ~]#
+	--------------------------------
+	[root@irc ~]# ip route show | grep default
+	default via 192.168.1.1 dev enp0s3 proto dhcp metric 100
+	[root@irc ~]#
+	--------------------------------
+	[root@irc ~]# ip route show | grep default | awk {'print $3'}
+	192.168.1.1
 	[root@irc ~]#
