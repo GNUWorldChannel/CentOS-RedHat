@@ -118,7 +118,7 @@
 
 	[root@irc ~]# 
 	
-	NOTE: How to REMOVE a OPEN port! 
+	NOTE: How to REMOVE an OPEN port! 
 	[root@irc ~]# firewall-cmd --remove-port=6667/tcp
 	success
 	[root@irc ~]# 
