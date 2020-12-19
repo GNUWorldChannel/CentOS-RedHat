@@ -24,7 +24,7 @@
 	[root@irc ~]# yum install -y systemd nano
 	[root@irc ~]# hostnamectl set-hostname irc.undernet.org
 	
-	PLEASE NOTE: when we say "irc.undernet.org" means your host name.	
+	PLEASE NOTE: when we say "irc.undernet.org" means write your own hostname.	
 	NOTE: You can use hostnamectl. if you change with. /etc/hostname need to change /etc/hosts too.
 	NOTE: You need to set your hostname and save file. Crt + X + Y + Intro
 	
@@ -105,7 +105,7 @@
 	-rw-r--r--. 1 root root 339 Aug 11 22:53 work.xml
 	[root@irc ~]#
 
-	NOTE: How to Open Ports with FirewallD 80, 443, 53, 113, 6667, 4400, 25, 110, 22
+	NOTE: How to Open Ports with FirewallD 80, 443, 53, 113, 110, 6667, 4400, 25, 110, 22
 	
 	[root@localhost ~]# firewall-cmd --add-port=6667/tcp
 	success
