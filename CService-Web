@@ -5,3 +5,126 @@
  The \____|___/\___|_|    \_/ |_|\___\___|      \_/\_/ \___|_.__/ Guide #4
 
 --------------------------------------------------------------------------
+		OS SUPPORT: CentOS 8.1-131911.0.8.el8.x86_64
+			   [ by: ARI3L | rVn | y2k ]
+--------------------------------------------------------------------------
+Pay attention to the following: If any cservice-web module does not respond 
+or gives you problems, you should ask the official Undernet network coders,
+because we can only help you install the site, but never modify the code that they wrote.
+--------------------------------------------------------------------------
+#1. Prepare the system by installing the necessary components.
+
+	[root@irc ~]# yum install -y httpd
+	[root@irc ~]# firewall-cmd --permanent --add-service=https
+	[root@irc ~]# firewall-cmd --permanent --add-service=http
+	[root@irc ~]# firewall-cmd --reload
+	
+	NOTE: Install PHP 7.4 in CentOS 8 / 8.1 *
+		
+	[root@irc ~]# dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+	[root@irc ~]# dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+	[root@irc ~]# dnf install dnf-utils
+	[root@irc ~]# dnf module reset php
+	[root@irc ~]# dnf module enable php:remi-7.4
+	[root@irc ~]# dnf install php php-opcache php-gd php-curl php-mysqlnd
+	[root@irc ~]# yum install -y php-pgsql php-devel php-xmlrpc
+	[root@irc ~]# 
+	[root@irc ~]# php -v
+	PHP 7.4.13 (cli) (built: Nov 24 2020 10:03:34) ( NTS )
+	Copyright (c) The PHP Group
+	Zend Engine v3.4.0, Copyright (c) Zend Technologies
+		with Zend OPcache v7.4.13, Copyright (c), by Zend Technologies
+
+	[root@irc ~]# updatedb	
+	[root@irc ~]#  nano /etc/php.ini
+	NOW: Go to the line 187 and change short_open_tag (from Off to On)
+	Save the file with (CTRL+O)
+
+	[root@irc ~]# service httpd restart
+
+	[root@irc ~]# curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+
+#2. Now We going to download the GNUWorld cservice-web part!
+	
+	 [root@irc ~]#
+	 [root@irc ~]# su - gnuworld
+	 [gnuworld@irc ~]$ 
+	 [gnuworld@irc ~]$ git clone https://github.com/UndernetIRC/cservice-web/
+	 [gnuworld@irc ~]$ cd cservice-web
+	 [gnuworld@irc cservice-web]$ composer install
+	 [gnuworld@irc cservice-web]$ cd php_includes
+	 [gnuworld@irc php_includes]$ cp config.inc.dist config.inc
+	 EDIT: config.inc (With your own values)
+	 
+	 [gnuworld@irc php_includes]$ cd ..
+	 [gnuworld@irc cservice-web]$ cd ..
+	 [gnuworld@irc ~]$
+
+#3. Now we back to root user, for some user permission.
+	 
+	 [gnuworld@irc ~]$ su
+	 [root@irc ~]# mkdir -p /var/www/example.org/html
+	 [root@irc ~]# mkdir -p /var/www/example.org/log
+	 [root@irc ~]# chown -R $USER:$USER /var/www/example.org/html
+	 [root@irc ~]# chmod -R 755 /var/www
+	 [root@irc html]#
+	 [root@irc html]# cd /var/www/example.org/html
+     [root@irc html]# chmod 711 ~gnuworld
+  	 [root@irc html]# chmod 711 ~gnuworld/cservice-web
+  	 [root@irc html]# chmod 755 ~gnuworld/cservice-web/php_includes
+  	 [root@irc html]# chmod 644 ~gnuworld/cservice-web/php_includes/config.inc
+  	 [root@irc html]# chmod 755 ~gnuworld/cservice-web/docs/gnuworld/
+  	 [root@irc html]# ln -s /home/gnuworld/cservice-web/docs/gnuworld 
+ 	 [root@irc html]# cd
+	 [root@irc ~]#
+	 [root@irc ~]# mkdir /etc/httpd/sites-available /etc/httpd/sites-enabled
+	 [root@irc ~]# nano /etc/httpd/conf/httpd.conf
+	 
+	 NOTE: Add this line on the botton of this .conf file. IncludeOptional sites-enabled/*.conf
+	 NOTE: Looks some like this:
+	 ----------------------------
+	 
+	 # Supplemental configuration
+	 #
+	 # Load config files in the "/etc/httpd/conf.d" directory, if any.
+	 IncludeOptional conf.d/*.conf
+	 IncludeOptional sites-enabled/*.conf
+	
+	----------------------------
+	 NOTE: Edit the file and save change. CTRL+X+Y
+	 
+	 NOTE: Now we edit the vhost create in the sites-available.
+	 
+	 [root@irc ~]# nano /etc/httpd/sites-available/example.org.conf
+       
+	 NOTE: EXAMPLE VHost
+
+		<VirtualHost *:80>
+			ServerName www.example.org
+			ServerAlias example.org
+			DocumentRoot /var/www/example.org/html
+			ErrorLog /var/www/example.org/log/error.log
+			CustomLog /var/www/example.org/log/requests.log combined
+		</VirtualHost>	 
+	   
+#4. We back again into gnuworld user		 	 
+         
+     [root@irc ~]# cd
+	 [root@irc ~]# su - gnuworld
+	 [gnuworld@irc ~]$ cd /home/gnuworld/cservice-web/php_includes
+	 [gnuworld@irc php_includes]$
+	 
+	 NOTE: This entry is for the first username created in the db. (Admin or your custom username)
+	       
+	 NOW: nano ipr.sql 
+	 Write your own ip. We show you as an example the first entry if you are trying to access locally.
+	 insert into ip_restrict (id, user_id, added_by, added, type, expiry, value) values (1, 1, 1, now()::abstime::int4, 1, 0, '192.168.1.0/24');
+	 Save the file with (CTRL+O)
+	 
+	 With the gnuworld running, perform:
+	 [gnuworld@irc php_includes]$ /usr/local/pgsql/bin/psql -h 127.0.0.1 cservice < ipr.sql 
+	 
+	 NOW you are able to login into cservice-web with Admin + temPass if you didn´t change it with the ip provided.
+	 You can add more ips from user edit via web, so no need to add another one.
+	 
+	 That´s all :)
