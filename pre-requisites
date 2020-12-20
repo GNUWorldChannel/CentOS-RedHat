@@ -130,8 +130,7 @@
 	[root@irc ~]#
 	
 	NOTE: Check if the xinetd is working well!
-	NOTE: 
-	
+		
 	[root@irc ~]# ps aux | grep xinetd
 	root       36644  0.0  0.0  46724   508 ?        Ss   15:29   0:00 /usr/sbin/xinetd -stayalive -pidfile /var/run/xinetd.pid
 	root       36686  0.0  0.0  12112   996 pts/2    S+   15:30   0:00 grep --color=auto xinetd
