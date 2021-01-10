@@ -44,6 +44,9 @@
 	----------------------
 	[gnuworld@irc lib]$ cp example.conf ircd.conf
 	[gnuworld@irc lib]$ echo "Hello World" > ircd.motd
+	
+	NOTE: Now Edit ircd.conf how you need and saved it!
+        [gnuworld@irc lib]$ nano ircd.conf
 	----------------------
 	[gnuworld@irc lib]$ ls
 	example.conf  ircd.conf  ircd.motd
