@@ -6,7 +6,7 @@
  The  \____|_| \_|\___/   \_/\_/ \___/|_|_|  \__,_| Guide #3
 ------------------------------------------------------------
 	OS SUPPORT: CentOS 8.1-131911.0.8.el8.x86_64
-		[ by: ARI3L | rVn | y2k ]
+		[ by: ARI3L | y2k ]
 ------------------------------------------------------------
 
 #1 - Prepare the system by installing the necessary components. (tcl-dev, net-tools, libpqxx-dev)
