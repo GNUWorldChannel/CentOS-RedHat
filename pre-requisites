@@ -39,7 +39,7 @@
 #2 - Install / Development Tools / tcl-devel / perl / screen / xinetd / authd
 	
 	[root@irc ~]# yum groupinstall -y 'Development Tools'
-	[root@irc ~]# yum install -y tcl-devel perl screen xinetd authd
+	[root@irc ~]# yum install -y tcl-devel perl xinetd authd
 
 
 #3 - Firewall Start / enable / status your firewall.
