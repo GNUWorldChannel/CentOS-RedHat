@@ -11,7 +11,7 @@
 
 #1 - Prepare the system by installing the necessary components. (tcl-dev, net-tools, libpqxx-dev)
 
-	 [root@irc ~]# apt-get install tcl-dev net-tools libpqxx-dev mlocate
+	 [root@irc ~]# yum install tcl-dev net-tools libpqxx-dev mlocate
 
 #2 - Check if you have TCL installed.
 		
