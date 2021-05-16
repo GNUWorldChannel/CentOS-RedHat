@@ -49,12 +49,15 @@ because we can only help you install the site, but never modify the code that th
 	 [root@irc ~]#
 	 [root@irc ~]# su - gnuworld
 	 [gnuworld@irc ~]$ 
-	 [gnuworld@irc ~]$ git clone https://github.com/UndernetIRC/cservice-web/
+	 [gnuworld@irc ~]$ git clone https://github.com/GNUWorldChannel/cservice-web-php7.4.git
+	 [gnuworld@irc ~]$ mv cservice-web-php7.4 cservice-web
 	 [gnuworld@irc ~]$ cd cservice-web
 	 [gnuworld@irc cservice-web]$ composer install
 	 [gnuworld@irc cservice-web]$ cd php_includes
 	 [gnuworld@irc php_includes]$ cp config.inc.dist config.inc
-	 EDIT: config.inc (With your own values)
+	 [gnuworld@irc php_includes]$ cp cmaster.inc.dist cmaster.inc
+	 [gnuworld@irc php_includes]$ cp blackhole.inc.dist blackhole.inc 
+	 EDIT: inc files (With your own values)
 	 
 	 [gnuworld@irc php_includes]$ cd ..
 	 [gnuworld@irc cservice-web]$ cd ..
@@ -125,6 +128,6 @@ because we can only help you install the site, but never modify the code that th
 	 [gnuworld@irc php_includes]$ /usr/local/pgsql/bin/psql -h 127.0.0.1 cservice < ipr.sql 
 	 
 	 NOW you are able to login into cservice-web with Admin + temPass if you didn´t change it with the ip provided.
-	 You can add more ips from user edit via web, so no need to add another one.
+	 You can add more ips from user edit via web, so no need to use ipr.sql twice.
 	 
 	 That´s all :)
