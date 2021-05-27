@@ -24,7 +24,7 @@
 #3 - If you dont got install TCL this is the next step.
 	 NOTE: You got install tcl-devel on pre-requisites, but dont jump this step!!
 
-	 [root@irc ~]# git clone https://github.com/Shadowss/tcl8.4.13-src
+	 [root@irc ~]# git clone git clone https://github.com/unixfool/tcl8.4.13-src.git
 	 [root@irc ~]# cd tcl8.4.13-src/unix/	
 	 [root@irc unix]# chmod +x configure
 	 [root@irc unix]# ./configure
