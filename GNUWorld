@@ -61,7 +61,6 @@
 	 [root@irc pgtcl1.5]# chmod +x configure
 	 [root@irc pgtcl1.5]# ./configure --enable-modules=ccontrol,cservice,openchanfix --with-pgsql-home=/usr/local/pgsql --with-extra-includes=/usr/include/postgresql/
 	 [root@irc pgtcl1.5]# make
-	 [root@irc pgtcl1.5]# cd generic/
 	 	 
 	 NOTE: This script got a TRICK!! going to show a Error with:
 	 /usr/bin/install: cannot stat `./doc/*.n': No such file or directory
@@ -69,7 +68,6 @@
 	 NOTE: So make sure you create first! for this error dont display!
 	 NOTE: Some people like to use touch or mkdir, but we recoment nano with the next trick!! :)
 	 
-	 root@ircd:~/pgtcl1.5/generic# cd ..
 	 [root@irc pgtcl1.5]# nano ./doc/*.n
 	 
 	 NOTE: nano ./doc/*.n   (Inside that file, just write a [A] and erase all!! make sure the file is empty.
