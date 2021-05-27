@@ -24,7 +24,7 @@
 #3 - If you dont got install TCL this is the next step.
 	 NOTE: You got install tcl-devel on pre-requisites, but dont jump this step!!
 
-	 [root@irc ~]# git clone git clone https://github.com/unixfool/tcl8.4.13-src.git
+	 [root@irc ~]# git clone https://github.com/unixfool/tcl8.4.13-src.git
 	 [root@irc ~]# cd tcl8.4.13-src/unix/	
 	 [root@irc unix]# chmod +x configure
 	 [root@irc unix]# ./configure
@@ -54,7 +54,7 @@
 	 
 #5 - Install PGTCL1.5
 	 
-	 [root@irc ~]# git clone https://github.com/Shadowss/pgtcl1.5.git
+	 [root@irc ~]# git clone https://github.com/unixfool/pgtcl1.5.git
 	 [root@irc ~]# cd pgtcl1.5
 	 [root@irc pgtcl1.5]# export PG_CONFIG=/usr/local/pgsql/bin/pg_config
 	 [root@irc pgtcl1.5]#
@@ -62,11 +62,7 @@
 	 [root@irc pgtcl1.5]# ./configure --enable-modules=ccontrol,cservice,openchanfix --with-pgsql-home=/usr/local/pgsql --with-extra-includes=/usr/include/postgresql/
 	 [root@irc pgtcl1.5]# make
 	 [root@irc pgtcl1.5]# cd generic/
-	 [root@irc generic]# nano pgtclAppInit.c
-	 
-	 NOTE: This file only need to edit the <> on this part: <libpgtcl.h> change to "libpgtcl.h"
-	 NOTE: Remember to save file. Crt + X , Y + Intro
-	 
+	 	 
 	 NOTE: This script got a TRICK!! going to show a Error with:
 	 /usr/bin/install: cannot stat `./doc/*.n': No such file or directory
 
